@@ -4,7 +4,7 @@ RNA-FrameFlow is a generative model for 3D RNA backbone design based on SE(3) fl
 
 ![RNA-FrameFlow](assets/rna_flow_diag.png)
 
-> Accompanying paper: ['RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design'](https://arxiv.org/abs/TODO) (Coming soon)
+> Accompanying paper: ['RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design'](https://arxiv.org/abs/2406.13839) (Coming soon)
 > 
 > Rishabh Anand*, Chaitanya K. Joshi*, Alex Morehead, Arian Rokkum Jamasb, Charles Harris, Simon V Mathis, Kieran Didi, Bryan Hooi, Pietro Liò.
 
