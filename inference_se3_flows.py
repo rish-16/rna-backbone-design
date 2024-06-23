@@ -1,3 +1,8 @@
+"""
+Code adapted from
+https://github.com/microsoft/protein-frame-flow/blob/main/experiments/inference_se3_flows.py
+"""
+
 import os
 import time
 import numpy as np
