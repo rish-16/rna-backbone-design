@@ -1,0 +1,61 @@
+# Configuration for inference on SE(3) diffusion experiments.
+defaults:
+  - config
+  - _self_
+
+inference:
+  run_inference: True # toggle T/F if you want to run only evaluation on an already-generated batch of samples
+  seed: 123
+  ckpt_path: configs/baseline.ckpt # path to model checkpoint of interest
+  output_dir: generated_rna_bb_samples # directory to store generated RNA backbone samples
+  name: generated_samples # sub-directory under the above directory to store the samples
+
+  # Auto-evaluation
+  evalsuite:
+    run_eval: True
+    eval_save_dir: "evalsuite_metrics"
+    paths:
+      rnasolo_path: "data/rnasolo/"
+      rnasolo_metadata_path: "metadata/rna_metadata.csv"
+      usalign_path: "src/tools/cpp/USalign"
+      qtmclust_path: "src/tools/cpp/qTMclust"
+      tmscore_path: "src/tools/cpp/TMscore"    
+    constants:
+      seqlen_range: [40,150]
+      tm_thresh: 0.45
+      dsg_thresh: 4.0 # angstroms
+
+  use_gpu: True
+  num_gpus: 1
+
+  interpolant:
+    min_t: 1e-2
+    rots:
+      corrupt: True
+      sample_schedule: exp
+      exp_rate: 10
+    trans:
+      corrupt: True
+      sample_schedule: linear
+    sampling:
+      num_timesteps: 50
+    self_condition: True
+
+  samples:
+    # Number of backbone samples per sequence length.
+    samples_per_length: 20
+
+    # Minimum sequence length to sample.
+    min_length: 40
+
+    # Maximum sequence length to sample.
+    max_length: 150
+
+    # gap between lengths to sample. i.e. this script will sample all lengths
+    # in range(min_length, max_length, length_step)
+    length_step: 10
+
+    # Subset of lengths to sample. If null, sample all targets.
+    length_subset: null
+
+    overwrite: False
