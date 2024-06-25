@@ -359,7 +359,7 @@ class FlowModule(LightningModule):
 
         sample_length = batch['num_res'].item()
         diffuse_mask = torch.ones(1, sample_length).long().unsqueeze(0)
-
+        sample_id = batch['sample_id'].item()
         sample_dir = os.path.join(self._output_dir, f'length_{sample_length}')
         os.makedirs(sample_dir, exist_ok=True)
 
@@ -371,7 +371,12 @@ class FlowModule(LightningModule):
         # store RNA backbone sample as PDB file at `saved_rna_path` specified above
         saved_rna_path = au.write_complex_to_pdbs(
                 sample,
-                os.path.join(sample_dir),
+                os.path.join(sample_dir, f'sample_{sample_id}'),
                 is_na_residue_mask=diffuse_mask.detach().cpu(),
-                no_indexing=True
+            )
+        
+        saved_rna_traj_path = au.write_complex_to_pdbs(
+                bb_traj,
+                os.path.join(sample_dir, f'sample_{sample_id}'),
+                is_na_residue_mask=diffuse_mask.detach().cpu(),
             )

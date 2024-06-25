@@ -81,12 +81,12 @@ class EvalSuite:
         self.usalign_path = paths.usalign_path
         self.qtmclust_path = paths.qtmclust_path
         self.tmscore_path = paths.tmscore_path
-        self.metadata_path = paths.metadata_path
-        self.gt_dir = paths.gt_dir
+        self.metadata_path = paths.rnasolo_metadata_path
+        self.gt_dir = paths.rnasolo_path
 
         self.tm_thresh = constants.tm_thresh # threshold for qTMclust
         self.rmsd_thresh = constants.rmsd_thresh # threshold for scRMSD
-        self.metadata_len_filter = constants.metadata_len_filter
+        self.metadata_len_filter = constants.seqlen_range
 
         # temp files
         self.grnade_save_path = grnade_save_path
@@ -299,7 +299,7 @@ class EvalSuite:
             if os.path.isdir(fp) and "length_" in fp:
                 length = int(pdb_size_dir.split("_")[-1])
                 for pdb_name in os.listdir(fp):
-                    if pdb_name.endswith(".pdb"):
+                    if pdb_name.endswith(".pdb") and "traj" not in pdb_name: # ignore trajectories, only keep final crystral structures
                         try:
                             idx = int(pdb_name.strip(".pdb").split("_")[-1])
                             new_name = os.path.join(gen_dir, pdb_size_dir, f"{length}_na_sample_{idx}.pdb")
@@ -550,11 +550,25 @@ class EvalSuite:
                 
         return gen_pdb_rmsds
     
-    def _rank_designable_topk(self, sample_arr, k, rankby="min_scTM"):
+    def _rank_designable_topk(self, sample_arr, rankby="min_scTM"):
         """
-        rankby (str): select from ["min_scRMSD", "min_scTM", "min_scGDT"]
+        Params:
+            sample_arr (list) : list of samples with respective self-consistency details
+            rankby (str): select from ["min_scRMSD", "min_scTM", "min_scGDT"]
+
+        Remarks:
+            Sorts samples according to given metric (scTM, scRMSD, scGDT) to compute validity
+
+        Returns:
+            Sorted list of valid samples
         """
-        print (f"Ranking top-K structures with K={k} using metric: {rankby} ...")
+
+        """
+        NOTE: 
+        The older version of this method also extracted the best "K" samples (K was a method parameter). 
+        We've removed this functionality and take all samples, even if they aren't among the best "K". 
+        """
+
         ranked_samples = {}
         for sample in sample_arr:
             # _, _, _, num_res, _ = sample
@@ -572,7 +586,6 @@ class EvalSuite:
             elif rankby == "min_scRMSD":
                 ranked_seqlen_sample_arr = sorted(seqlen_sample_arr, key=lambda rec : rec[rankby], reverse=False) # sort in ascending order by scRMSD
         
-            filtered_seqlen_sample_arr = ranked_seqlen_sample_arr
             filtered_seqlen_sample_arr = ranked_seqlen_sample_arr
             ranked_samples[n_res] = filtered_seqlen_sample_arr # extract the top-K and assign back to that size bucket
         

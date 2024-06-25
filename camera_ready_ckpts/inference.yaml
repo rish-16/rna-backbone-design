@@ -23,7 +23,7 @@ inference:
     constants:
       seqlen_range: [40,150]
       tm_thresh: 0.45
-      dsg_thresh: 4.0 # angstroms
+      rmsd_thresh: 4.0 # angstroms
 
   use_gpu: True
   num_gpus: 1
@@ -43,7 +43,7 @@ inference:
 
   samples:
     # Number of backbone samples per sequence length.
-    samples_per_length: 5
+    samples_per_length: 50
 
     # Minimum sequence length to sample.
     min_length: 40

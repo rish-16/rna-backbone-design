@@ -54,34 +54,16 @@ def write_complex_to_pdbs(
     chain_index: np.ndarray = None,
     b_factors=None,
     is_protein_residue_mask=None,
-    is_na_residue_mask=None,
-    overwrite=False,
-    no_indexing=False,
+    is_na_residue_mask=None
 ):
-    if overwrite:
-        max_existing_idx = 0
-    else:
-        file_dir = os.path.dirname(output_filepath)
-        file_name = os.path.basename(output_filepath).strip(".pdb")
-        existing_files = [x for x in os.listdir(file_dir) if file_name in x]
-        max_existing_idx = max(
-            [
-                int(re.findall(r"_(\d+).pdb", x)[0])
-                for x in existing_files
-                if re.findall(r"_(\d+).pdb", x)
-                if re.findall(r"_(\d+).pdb", x)
-            ]
-            + [0]
-        )
-    
-    if not no_indexing:
-        save_path = output_filepath.replace(".pdb", "") + f"_{max_existing_idx+1}.pdb"
-    else:
-        save_path = output_filepath
-    
+
+    save_path = output_filepath
     na_save_path = str(Path(save_path).parent / ("na_" + os.path.basename(save_path)))
     if not na_save_path.endswith(".pdb"):
-        na_save_path = na_save_path + ".pdb"
+        if complex_pos.ndim == 3:
+            na_save_path = na_save_path + ".pdb"
+        if complex_pos.ndim == 4:
+            na_save_path = na_save_path + "_traj.pdb" # save as trajectory
     
     with open(na_save_path, "w") as na_f:
         if complex_pos.ndim == 4:

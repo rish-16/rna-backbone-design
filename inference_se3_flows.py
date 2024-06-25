@@ -83,7 +83,7 @@ class Sampler:
         log.info(f'Finished in {elapsed_time:.2f}s')
         log.info(f'Generated samples are stored here: {self._cfg.inference.output_dir}/{self._cfg.inference.name}/')
 
-@hydra.main(version_base=None, config_path="./configs", config_name="inference")
+@hydra.main(version_base=None, config_path="./camera_ready_ckpts", config_name="inference")
 def run(cfg: DictConfig) -> None:
 
     # Read model checkpoint and run inference
