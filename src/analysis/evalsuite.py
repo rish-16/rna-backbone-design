@@ -744,7 +744,7 @@ class EvalSuite:
 
         for _, v in sorted_scrmsd.items():
             tm = list(map(lambda x : x['min_scTM'], v))
-            tm = list(sorted(rmsd))
+            tm = list(sorted(tm))
             filt_tm = list(filter(lambda x : x >= self.tm_thresh, tm))
             temp.extend(tm)
             total += len(tm)
