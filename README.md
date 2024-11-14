@@ -104,7 +104,7 @@ Your subdirectory should look like this now:
 .
 └── camera_ready_ckpts/
     ├── inference.yaml # for inference/sampling
-    ├── baseline.ckpt # for inference/sampling/finetuning
+    ├── rna_frameflow_public_weights.ckpt # for inference / sampling / finetuning
     └── config.yaml # for training
 ```
 
@@ -142,6 +142,10 @@ mkdir checkpoints
 cd checkpoints/
 wget https://proj.cse.cuhk.edu.hk/aihlab/RhoFold/api/download?filename=RhoFold_pretrained.pt -O RhoFold_pretrained.pt
 ```
+
+If the above URL does not work, we have stored the RhoFold checkpoints in a Google Drive for easier access:
+
+> [https://drive.google.com/drive/folders/1umg0hgkBl7zsF_2GdCIKkfsRWbJNEOvp?usp=drive_link](https://drive.google.com/drive/folders/1umg0hgkBl7zsF_2GdCIKkfsRWbJNEOvp?usp=drive_link)
 
 #### Running `EvalSuite`
 
