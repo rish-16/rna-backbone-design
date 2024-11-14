@@ -6,7 +6,7 @@ defaults:
 inference:
   run_inference: True # toggle T/F if you want to run only evaluation on an already-generated batch of samples
   seed: 123
-  ckpt_path: configs/baseline.ckpt # path to model checkpoint of interest
+  ckpt_path: configs/rna_frameflow_public_weights.ckpt # path to model checkpoint of interest
   output_dir: generated_rna_bb_samples # directory to store generated RNA backbone samples
   name: generated_samples # sub-directory under the above directory to store the samples
 
