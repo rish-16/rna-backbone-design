@@ -124,7 +124,7 @@ def convert_na_aatype6_to_aatype9(
 
 def atom27_to_frames(na, eps=1e-8):
     aatype = na["aatype"].clone()
-    all_atom_positions = na["all_atom_positions"]
+    all_atom_positions = na["all_atom_positions"] # in ATOM27 format
     all_atom_mask = na["all_atom_mask"] # NOTE: [1]_i if atom i exists in the residue's molecular structure (out of 27)
     na_deoxy = na["atom_deoxy"]
 

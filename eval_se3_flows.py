@@ -9,13 +9,15 @@ import numpy as np
 import hydra
 import torch
 import GPUtil
-from pytorch_lightning import Trainer
+# from pytorch_lightning import Trainer
 from omegaconf import DictConfig, OmegaConf
 
 import src.utils as eu
 from src.models.flow_module import FlowModule
 from src.data.pdb_na_dataset_base import LengthDataset
 from src.analysis.evalsuite import EvalSuite
+
+torch._dynamo.config.verbose = True 
 
 torch.set_float32_matmul_precision('high')
 log = eu.get_pylogger(__name__)
@@ -63,35 +65,28 @@ class Sampler:
         self._flow_module._samples_cfg = self._samples_cfg
         self._flow_module._output_dir = self._output_dir
 
-    def run_sampling(self):
-        devices = GPUtil.getAvailable(order='memory', limit = 8)[:self._infer_cfg.num_gpus]
-        log.info(f"Using devices: {devices}")
+    # def run_sampling(self):
+    #     devices = GPUtil.getAvailable(order='memory', limit = 8)[:self._infer_cfg.num_gpus]
+    #     log.info(f"Using devices: {devices}")
         
-        eval_dataset = LengthDataset(self._samples_cfg)
+    #     eval_dataset = LengthDataset(self._samples_cfg)
         
-        dataloader = torch.utils.data.DataLoader(eval_dataset, batch_size=1, shuffle=False, drop_last=False)
+    #     dataloader = torch.utils.data.DataLoader(eval_dataset, batch_size=1, shuffle=False, drop_last=False)
         
-        trainer = Trainer(
-            accelerator="gpu",
-            strategy="ddp",
-            devices=devices,
-        )
+    #     trainer = Trainer(
+    #         accelerator="gpu",
+    #         strategy="ddp",
+    #         devices=devices,
+    #     )
 
-        start_time = time.time()
-        trainer.predict(self._flow_module, dataloaders=dataloader)
-        elapsed_time = time.time() - start_time
-        log.info(f'Finished in {elapsed_time:.2f}s')
-        log.info(f'Generated samples are stored here: {self._cfg.inference.output_dir}/{self._cfg.inference.name}/')
+    #     start_time = time.time()
+    #     trainer.predict(self._flow_module, dataloaders=dataloader)
+    #     elapsed_time = time.time() - start_time
+    #     log.info(f'Finished in {elapsed_time:.2f}s')
+    #     log.info(f'Generated samples are stored here: {self._cfg.inference.output_dir}/{self._cfg.inference.name}/')
 
 @hydra.main(version_base=None, config_path="./camera_ready_ckpts", config_name="inference")
 def run(cfg: DictConfig) -> None:
-
-    # Read model checkpoint and run inference
-    if cfg.inference.run_inference:
-        log.info(f'Starting inference with {cfg.inference.num_gpus} GPUs')
-        sampler = Sampler(cfg)
-        sampler.run_sampling()
-
     # Run optional eval
     if cfg.inference.evalsuite.run_eval:
         print ("Starting EvalSuite on generated backbones ...")
@@ -112,7 +107,7 @@ def run(cfg: DictConfig) -> None:
         # run self-consistency pipeline
         metric_dict = evalsuite.perform_eval(
                                 rna_bb_samples_dir,
-                                flatten_dir=True
+                                flatten_dir=False
                             )
 
         # print out global self-consistency metrics

@@ -179,7 +179,8 @@ class RNAGraphFeaturizer(object):
         Args:
             pdb_filepath (str): Path to PDB file.
         """
-        sequence, coords, sec_struct, _ = pdb_to_tensor(pdb_filepath, return_sec_struct=True, return_sasa=False)
+        content = pdb_to_tensor(pdb_filepath, return_sec_struct=False, return_sasa=False)
+        sequence, coords, sec_struct, sasa = content
         coords = get_backbone_coords(coords, sequence)
         rna = {
             'sequence': sequence,

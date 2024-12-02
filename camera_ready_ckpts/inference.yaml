@@ -6,14 +6,14 @@ defaults:
 inference:
   run_inference: True
   seed: 123
-  ckpt_path: camera_ready_ckpts/baseline.ckpt # path to best-performing model checkpoint of interest
-  output_dir: cam_ready_rna_bb_samples # directory to store generated RNA backbone samples
-  name: generated_samples # sub-directory under the above directory to store the samples
+  ckpt_path: camera_ready_ckpts/rna_frameflow_public_weights.ckpt # path to best-performing model checkpoint of interest
+  output_dir: rebuttals_rna_bb_samples # directory to store generated RNA backbone samples
+  name: flattened_samples # sub-directory under the above directory to store the samples
   
   # Auto-evaluation
   evalsuite:
     run_eval: True # toggle T/F whether you want to run auto-evaluation on the freshly generated batch of backbone samples
-    eval_save_dir: "evalsuite_metrics"
+    eval_save_dir: "evalsuite_metrics_rebuttals_rmsd"
     paths:
       rnasolo_path: "data/rnasolo/"
       rnasolo_metadata_path: "metadata/rna_metadata.csv"
@@ -23,7 +23,7 @@ inference:
     constants:
       seqlen_range: [40,150]
       tm_thresh: 0.45
-      rmsd_thresh: 4.0 # angstroms
+      rmsd_thresh: 5.5 # angstroms
 
   use_gpu: True
   num_gpus: 1

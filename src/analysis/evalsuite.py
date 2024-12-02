@@ -98,7 +98,7 @@ class EvalSuite:
             self.gRNAde_module = gRNAde(split='all', max_num_conformers=1, gpu_id=gpu_id1)
             self.rhofold = RhoFold(rhofold_config)
             
-            RHOFOLD_CKPT = "./src/tools/rhofold_api/checkpoints/RhoFold_pretrained.pt"
+            RHOFOLD_CKPT = "./src/tools/rhofold_api/checkpoints/Rhofold_pretrained.pt"
             self.rhofold.load_state_dict(torch.load(RHOFOLD_CKPT, map_location=torch.device('cpu'))['model'])
             self.rhofold.eval()
             self.device = f"cuda:{gpu_id2}"
@@ -402,9 +402,15 @@ class EvalSuite:
 
         # inverse-fold all generated samples
         pbar = tqdm(os.listdir(gen_dir))
-        for _, pdb_name in enumerate(pbar): # outer loop: generated PDBs
+        for pdb_name in pbar: # outer loop: generated PDBs
             pbar.set_description(pdb_name)
             gen_fp = os.path.join(gen_dir, pdb_name)
+
+            print ("gen_fp:", gen_fp)
+            break
+        
+            seqlen = int(pdb_name.split("_")[0])
+            # print ("pdb:", pdb_name, gen_fp)
             
             # inner loop 1: generate sequences
             # for seq_idx in range(n_seqs_per_bb):
@@ -413,25 +419,25 @@ class EvalSuite:
             out_fp = os.path.join(self.grnade_save_path, f"{fasta_fn}.fasta")
             
             # save n_seqs_per_bb FASTA files for each generated backbone
-            if self.use_invfold:
-                gen_seqs, _, _, _ = self.gRNAde_module.design_from_pdb_file(
-                                                                pdb_filepath=gen_fp,
-                                                                output_filepath=None,
-                                                                n_samples=n_seqs_per_bb,
-                                                                temperature=0.1
-                                                            )
-            else:
-                raw_data = self.gRNAde_module.get_raw_data(pdb_filepath=gen_fp)
-                og_seq = raw_data['sequence'] # original sequence in the PDB 
-                gen_seqs = []
-                for idx in range(n_seqs_per_bb):       
-                    gen_seqs.append(
-                        SeqRecord(
-                                Seq(og_seq), 
-                                id=f"sample={idx}",
-                                description=f"original:{og_seq}"
-                            )
-                    )
+            # if self.use_invfold:
+            #     gen_seqs, _, _, _ = self.gRNAde_module.design_from_pdb_file(
+            #                                                     pdb_filepath=gen_fp,
+            #                                                     output_filepath=None,
+            #                                                     n_samples=n_seqs_per_bb,
+            #                                                     temperature=0.1
+            #                                                 )
+            # else:
+            #     raw_data = self.gRNAde_module.get_raw_data(pdb_filepath=gen_fp)
+            #     og_seq = raw_data['sequence'] # original sequence in the PDB 
+            #     gen_seqs = []
+            #     for idx in range(n_seqs_per_bb):       
+            #         gen_seqs.append(
+            #             SeqRecord(
+            #                     Seq(og_seq), 
+            #                     id=f"sample={idx}",
+            #                     description=f"original:{og_seq}"
+            #                 )
+            #         )
 
             # print (f"Generated structure for: {pdb_name}")
             torch.cuda.empty_cache()
@@ -439,21 +445,30 @@ class EvalSuite:
 
             seq_files = []
             # split sequences across N_seq different FASTA files
+            # for seq_idx in range(n_seqs_per_bb):
+            #     """
+            #     1. Read `n_seqs_per_bb` sequences from out_fp
+            #     2. Create `n_seqs_per_bb` separate files
+            #     3. Save each sequence in new file
+            #     """
+            #     seq = gen_seqs[seq_idx] # TODO: read sequences from out_fp
+            #     updated_fasta_fn = pdb_name.strip(".pdb") + f"_{seq_idx}"
+            #     new_out_fp = os.path.join(self.grnade_save_path, updated_fasta_fn)
+            #     seq_files.append([
+            #             new_out_fp, 
+            #             updated_fasta_fn,
+            #             seq_idx
+            #         ])
+            #     SeqIO.write([seq], new_out_fp, "fasta")
+        
             for seq_idx in range(n_seqs_per_bb):
-                """
-                1. Read `n_seqs_per_bb` sequences from out_fp
-                2. Create `n_seqs_per_bb` separate files
-                3. Save each sequence in new file
-                """
-                seq = gen_seqs[seq_idx] # TODO: read sequences from out_fp
                 updated_fasta_fn = pdb_name.strip(".pdb") + f"_{seq_idx}"
                 new_out_fp = os.path.join(self.grnade_save_path, updated_fasta_fn)
                 seq_files.append([
-                        new_out_fp, 
-                        updated_fasta_fn,
-                        seq_idx
-                    ])
-                SeqIO.write([seq], new_out_fp, "fasta")
+                    new_out_fp,
+                    updated_fasta_fn,
+                    seq_idx
+                ])
 
             # inner loop 2: for each predicted sequence, predict the structure
             all_pdb_names = []
@@ -463,34 +478,35 @@ class EvalSuite:
                 """
                 seq_fp, fasta_fn, seq_idx = rec
                 input_a3m = input_fas = seq_fp
-                data_dict = get_features(input_fas, input_a3m)
-                outputs = self.rhofold(
-                                tokens=data_dict['tokens'].to(self.device), 
-                                rna_fm_tokens=data_dict['rna_fm_tokens'].to(self.device), 
-                                seq=data_dict['seq']
-                            )
+                # data_dict = get_features(input_fas, input_a3m)
                 
-                output = outputs[-1]
-                unrelaxed_model = os.path.join(self.rhofold_save_path, f'{fasta_fn}.pdb')
-                node_cords_pred = output['cord_tns_pred'][-1].squeeze(0)
+                # outputs = self.rhofold(
+                #                 tokens=data_dict['tokens'].to(self.device), 
+                #                 rna_fm_tokens=data_dict['rna_fm_tokens'].to(self.device), 
+                #                 seq=data_dict['seq']
+                #             )
+                
+                # output = outputs[-1]
+                # unrelaxed_model = os.path.join(self.rhofold_save_path, f'{fasta_fn}.pdb')
+                # node_cords_pred = output['cord_tns_pred'][-1].squeeze(0)
 
                 all_pdb_names.append(f'{fasta_fn}.pdb')
 
-                self.rhofold.structure_module.converter.export_pdb_file(
-                                                            data_dict['seq'],
-                                                            node_cords_pred.data.cpu().numpy(),
-                                                            path=unrelaxed_model, 
-                                                            chain_id=None,
-                                                            confidence=output['plddt'][0].data.cpu().numpy(),
-                                                            logger=None
-                                                        )
+                # self.rhofold.structure_module.converter.export_pdb_file(
+                #                                             data_dict['seq'],
+                #                                             node_cords_pred.data.cpu().numpy(),
+                #                                             path=unrelaxed_model, 
+                #                                             chain_id=None,
+                #                                             confidence=output['plddt'][0].data.cpu().numpy(),
+                #                                             logger=None
+                #                                         )
         
                 torch.cuda.empty_cache()
                 gc.collect()
                 
             # inner loop 3: compute RMSDs between predicted and original generated backbone
             gen_uni = mda.Universe(gen_fp, format="PDB")
-            gen_c4p_atoms = gen_uni.select_atoms("name C4'")
+            gen_c4p_atoms = gen_uni.select_atoms("name C4' and name O3' and name C3'")
             
             # temp metrics
             cur_min_rmsd = float("inf") # very large number
@@ -503,7 +519,7 @@ class EvalSuite:
                 # rhofold_pdb_name : <seq_len>_na_sample_<idx>_<seq_idx>.pdb
                 rhofold_fp = os.path.join(self.rhofold_save_path, pdb_name.strip(".pdb") + f"_{k}.pdb")
                 rf_uni = mda.Universe(rhofold_fp, format="PDB")
-                rf_c4p_atoms = rf_uni.select_atoms("name C4'")
+                rf_c4p_atoms = rf_uni.select_atoms("name C4' and name O3' and name C3'")
 
                 if gen_c4p_atoms.positions.shape[0] != rf_c4p_atoms.positions.shape[0]:
                     continue # skip if size mismatch (negligible)
@@ -531,7 +547,14 @@ class EvalSuite:
                         ) # compute C4' RMSD
                 
                 # use scTM to track the best structure among all RhoFold predictions
-                if cur_max_scTM < tm:
+                # if cur_max_scTM < tm:
+                    # cur_min_rmsd = r_score
+                    # cur_best_pred_pdb_name = pdb_name.strip(".pdb") + f"_{k}" # store the best predicted match's PDB filename from RhoFold
+                    # cur_max_scTM = tm # store scTM of best structure prediction (assumed to be the best as well)
+                    # cur_scGDT = gdt # store scGDT of best structure prediction (assumed to be the best as well)
+
+                # use scRMSD to track the best structure among all RhoFold predictions
+                if cur_min_rmsd > r_score:
                     cur_min_rmsd = r_score
                     cur_best_pred_pdb_name = pdb_name.strip(".pdb") + f"_{k}" # store the best predicted match's PDB filename from RhoFold
                     cur_max_scTM = tm # store scTM of best structure prediction (assumed to be the best as well)
@@ -545,12 +568,13 @@ class EvalSuite:
                 "n_res": n_res,
                 "cur_best_pred_pdb_name": cur_best_pred_pdb_name,
                 "min_scTM": cur_max_scTM,
-                "min_scGDT": cur_scGDT
+                "min_scGDT": cur_scGDT,
+                "seqlen": seqlen
             })
                 
         return gen_pdb_rmsds
     
-    def _rank_designable_topk(self, sample_arr, rankby="min_scTM"):
+    def _rank_designable_topk(self, sample_arr, rankby="min_scRMSD"):
         """
         Params:
             sample_arr (list) : list of samples with respective self-consistency details

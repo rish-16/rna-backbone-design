@@ -78,31 +78,19 @@ def pdb_to_tensor(
     nt_list = ["A" for _ in nt_list] # for MMDiff evals only
     # nt_list = ['A' for _ in nt_list]
     sequence = "".join(nt_list)
-    if len(sequence) <= 1: return  # do not include single bases as data points
+    
+    if len(sequence) <= 1: 
+        print (f"encountered single base sequence: {filepath}")
+        return None, None, None, None  # do not include single bases as data points
 
     # get 3D coordinates (centered at origin)
     coords = df_to_tensor(df, center=True)
     assert coords.shape[0] == len(sequence), "Sequence and coordinates must be the same length"
     
     sec_struct = None
-    # if return_sec_struct:
-        # # get secondary structure
-        # sec_struct = pdb_to_sec_struct(filepath, sequence, keep_pseudoknots)
-        # assert len(sec_struct) == len(sequence), "Sequence and secondary structure must be the same length"
-
     sasa = None
-    # if return_sasa:
-    #     # get solvent accessibile surface area
-    #     atom_array = load_structure(filepath)
-    #     sasa = apply_residue_wise(
-    #         atom_array,
-    #         get_sasa(atom_array),
-    #         np.nansum
-    #     )
-    #     assert len(sasa) == len(sequence), "Sequence and SASA must be the same length"
 
     return sequence, coords, sec_struct, sasa
-
 
 def df_to_tensor(
     df: pd.DataFrame,
