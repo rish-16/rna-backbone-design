@@ -36,9 +36,9 @@ Download RNASolo (3.48GB) containing the ~14K structures used to train our model
 
 ```bash
 # create data directory
-mkdir data/rnasolo; cd data/rnasolo
+mkdir -p data/rnasolo; cd data/rnasolo
 # download RNAsolo
-wget https://rnasolo.cs.put.poznan.pl/media/files/zipped/bunches/pdb/all_member_pdb_4_0__3_326.zip 
+wget https://rnasolo.cs.put.poznan.pl/media/files/zipped/bunches/pdb/all_member_pdb_4_0__3_326.zip
 unzip all_member_pdb_4_0__3_326.zip # unzips all PDB files
 mv all_member_pdb_4_0__3_326.zip ../ # moves ZIP archive out of new file directory
 ```
