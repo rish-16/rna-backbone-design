@@ -4,10 +4,10 @@ RNA-FrameFlow is a generative model for 3D RNA backbone design based on SE(3) fl
 
 ![RNA-FrameFlow](assets/rna_flow_diag.png)
 
-<!-- > Accompanying paper: ['RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design'](https://arxiv.org/abs/2406.13839), by Rishabh Anand*, Chaitanya K. Joshi*, Alex Morehead, Arian Rokkum Jamasb, Charles Harris, Simon V Mathis, Kieran Didi, Bryan Hooi, Pietro Liò.
+> Accompanying paper: ['RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design'](https://arxiv.org/abs/2406.13839), by Rishabh Anand*, Chaitanya K. Joshi*, Alex Morehead, Arian Rokkum Jamasb, Charles Harris, Simon V Mathis, Kieran Didi, Bryan Hooi, Pietro Liò.
 > - **Oral** at Machine Learning for Computational Biology (MLCB), 2024 (UW, Seattle, Washington)
 > - **Oral** at ICML 2024 Structured Probabilistic Inference & Generative Modeling Workshop: [`openreview`](https://openreview.net/forum?id=Z74lflCKmF)
-> - **Spotlight** at ICML 2024 AI4Science Workshop: [`openreview`](https://openreview.net/forum?id=YzjHCdZM2h) -->
+> - **Spotlight** at ICML 2024 AI4Science Workshop: [`openreview`](https://openreview.net/forum?id=YzjHCdZM2h)
 
 ## Pipeline
 
@@ -183,7 +183,7 @@ Designability (% scRMSD <= 4 ang): 0.433
 
 ## Acknowledgements
 
-<!-- This work is presented by Rishabh Anand to fulfill the Bachelor's Dissertation requirements at the Department of Computer Science, School of Computing, National University of Singapore (NUS). It is done in collaboration with Pietro Liò's group at the University of Cambridge, UK. -->
+This work is presented by Rishabh Anand to fulfill the Bachelor's Dissertation requirements at the Department of Computer Science, School of Computing, National University of Singapore (NUS). It is done in collaboration with Pietro Liò's group at the University of Cambridge, UK.
 
 Our codebase builds on the open-source contributions from the following projects:
 - [`protein-frame-flow`](https://github.com/microsoft/protein-frame-flow)
@@ -191,7 +191,7 @@ Our codebase builds on the open-source contributions from the following projects
 - [`MMDiff`](https://github.com/Profluent-Internships/MMDiff)
 - [`geometric-rna-design`](https://github.com/chaitjo/geometric-rna-design)
 
-<!-- ## Citation
+## Citation
 
 ```
 @article{anand2024rnaframeflow,
@@ -200,4 +200,4 @@ Our codebase builds on the open-source contributions from the following projects
   journal={arXiv preprint arXiv:2406.13839},
   year={2024},
 }
-``` -->
+```
