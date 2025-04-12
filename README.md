@@ -1,5 +1,7 @@
 # RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design
 
+## Description
+
 RNA-FrameFlow is a generative model for 3D RNA backbone design based on SE(3) flow matching. 
 
 ![RNA-FrameFlow](assets/rna_flow_diag.png)
@@ -13,6 +15,23 @@ RNA-FrameFlow is a generative model for 3D RNA backbone design based on SE(3) fl
 
 ![RNA-FrameFlow pipeline](assets/pipeline.png)
 
+## Contents
+
+- [RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design](#rna-frameflow-flow-matching-for-de-novo-3d-rna-backbone-design)
+  - [Description](#description)
+  - [Pipeline](#pipeline)
+  - [Contents](#contents)
+  - [Installation](#installation)
+  - [Data Preparation](#data-preparation)
+  - [Training and Inference](#training-and-inference)
+    - [Download weights](#download-weights)
+    - [Using your own retrained checkpoints](#using-your-own-retrained-checkpoints)
+    - [Run inference](#run-inference)
+    - [Run evaluation](#run-evaluation)
+      - [Running `EvalSuite`](#running-evalsuite)
+  - [Acknowledgements](#acknowledgements)
+  - [Citation](#citation)
+  
 ## Installation
 
 ```bash
@@ -23,8 +42,9 @@ cd rna-backbone-design/
 conda create -n rna-bb-design python=3.10 -y
 conda activate rna-bb-design
 # install dependencies
-chmod +x master_rna_install.sh
-bash master_rna_install.sh
+pip install "torch>=2.1.2"
+pip install torch_scatter torch_cluster -f https://data.pyg.org/whl/torch-2.1.2+cu121.html  # n.b., skip if these CUDA versions are not desired
+pip install -e .
 ```
 
 > [!CAUTION]
@@ -54,7 +74,7 @@ When you visit `data/rnasolo_proc/`, you should see a bunch of subdirectories re
 Your directory should now look like this:
 ```
 .
-├── src
+├── rna_backbone_design
 │   ├── analysis
 │   ├── data
 │   ├── experiments
@@ -87,7 +107,7 @@ After training, the final saved checkpoint can be found at `ckpt/se3-fm/rna-fram
 
 Alternatively, you can use our camera-ready baseline checkpoint. The config files necessary can be found inside `camera_ready_ckpts/`.
 
-> We provide a brief description of the different schemes to represent all-atom RNA molecules used throughout the codebase in `src/DATA_REPR.md`. 
+> We provide a brief description of the different schemes to represent all-atom RNA molecules used throughout the codebase in `rna_backbone_design/DATA_REPR.md`. 
 
 ### Download weights
 
@@ -135,10 +155,10 @@ Running inference also performs evaluation on the generated samples to compute l
 
 ![Evaluation pipeline](assets/evaluation.png)
 
-We provide an evaluation pipeline called [`EvalSuite`](https://github.com/rish-16/rna-backbone-design/blob/main/src/analysis/evalsuite.py) that computes local and global structural metrics when pointed at a directory of our model's RNA backbone samples. We use [gRNAde](https://arxiv.org/abs/2305.14749) (Joshi et al., 2023) as our inverse folder and [RhoFold](https://arxiv.org/abs/2207.01586) (Shen et al., 2022) as the structure predictor. First, download the RhoFold checkpoints (we didn't include this because of its size):
+We provide an evaluation pipeline called [`EvalSuite`](https://github.com/rish-16/rna-backbone-design/blob/main/rna_backbone_design/analysis/evalsuite.py) that computes local and global structural metrics when pointed at a directory of our model's RNA backbone samples. We use [gRNAde](https://arxiv.org/abs/2305.14749) (Joshi et al., 2023) as our inverse folder and [RhoFold](https://arxiv.org/abs/2207.01586) (Shen et al., 2022) as the structure predictor. First, download the RhoFold checkpoints (we didn't include this because of its size):
 
 ```bash
-cd src/tools/rhofold_api/
+cd rna_backbone_design/tools/rhofold_api/
 mkdir checkpoints
 cd checkpoints/
 wget https://proj.cse.cuhk.edu.hk/aihlab/RhoFold/api/download?filename=RhoFold_pretrained.pt -O RhoFold_pretrained.pt
@@ -153,7 +173,7 @@ If the above URL does not work, we have stored the RhoFold checkpoints in a Goog
 Go back to the project's root directory. Here is a minimal example of `EvalSuite` in action. The API takes care of the computation, storage, and management of local structural measurements as well as global metrics (desigability, diversity, and novelty). Set-up instructions can be found in `inference_se3_flows.py`.
 
 ```python
-from src.analysis.evalsuite import EvalSuite
+from rna_backbone_design.analysis.evalsuite import EvalSuite
 
 rna_bb_samples_dir = "generated_rna_bb_samples/" # generated samples for each sequence length
 saving_dir = "rna_eval_metrics" # save temp files and metrics
