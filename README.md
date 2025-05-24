@@ -32,8 +32,18 @@ bash master_rna_install.sh
 
 ## Data Preparation
 
-Download RNASolo (3.48GB) containing the ~14K structures used to train our model at a resolution $\leq 4.0$ in the `.pdb` file format (we used a cutoff date 5 January 2024). In the project `rna-backbone-design` repository,
+Download RNASolo (3.48GB) containing the ~14K structures used to train our model at a resolution $\leq 4.0$ in the `.pdb` file format. In the project `rna-backbone-design` repository,
 
+```bash
+# Download structures in PDB format from RNAsolo (31 October 2023 cutoff)
+mkdir -p data/rnasolo; cd data/rnasolo
+gdown https://drive.google.com/uc?id=10NidhkkJ-rkbqDwBGA_GaXs9enEBJ7iQ
+tar -zxvf RNAsolo_31102023.tar.gz
+```
+
+<details>
+<summary>Older instructions to download RNAsolo (not working – ignore this)</summary>
+    
 ```bash
 # create data directory
 mkdir -p data/rnasolo; cd data/rnasolo
@@ -42,6 +52,7 @@ wget https://rnasolo.cs.put.poznan.pl/media/files/zipped/bunches/pdb/all_member_
 unzip all_member_pdb_4_0__3_326.zip # unzips all PDB files
 mv all_member_pdb_4_0__3_326.zip ../ # moves ZIP archive out of new file directory
 ```
+</details>
 
 We provide a preprocessing script `process_rna_pdb_files.py` that prepares the RNA samples used during training. Again, in the main project directory,
 ```bash
