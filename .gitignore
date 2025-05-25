@@ -1,7 +1,7 @@
 # RNA-FrameFlow
 data/**
 rebuttals/**
-src/tools/rhofold_api/checkpoints/RhoFold_pretrained.pt
+rna_backbone_design/tools/rhofold_api/checkpoints/RhoFold_pretrained.pt
 configs/*.ckpt
 camera_ready_ckpts/*.ckpt
 
@@ -177,4 +177,4 @@ cython_debug/
 TO_SHIFT_OUT_REPRO/**
 
 /all_rebuttal/**
-src/tools/rhofold_api/checkpoints/**
+rna_backbone_design/tools/rhofold_api/checkpoints/**

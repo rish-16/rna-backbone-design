@@ -18,8 +18,8 @@ import pandas as pd
 import torch
 from Bio import PDB
 
-from src.data import utils
-from src.data import parsers
+from rna_backbone_design.data import utils
+from rna_backbone_design.data import parsers
 
 # Define the parser
 parser = argparse.ArgumentParser(description="PDB processing script.")

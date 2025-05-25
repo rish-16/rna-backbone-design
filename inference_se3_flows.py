@@ -12,10 +12,10 @@ import GPUtil
 from pytorch_lightning import Trainer
 from omegaconf import DictConfig, OmegaConf
 
-import src.utils as eu
-from src.models.flow_module import FlowModule
-from src.data.pdb_na_dataset_base import LengthDataset
-from src.analysis.evalsuite import EvalSuite
+import rna_backbone_design.utils as eu
+from rna_backbone_design.models.flow_module import FlowModule
+from rna_backbone_design.data.pdb_na_dataset_base import LengthDataset
+from rna_backbone_design.analysis.evalsuite import EvalSuite
 
 torch.set_float32_matmul_precision('high')
 log = eu.get_pylogger(__name__)
