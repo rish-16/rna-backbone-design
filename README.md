@@ -33,22 +33,20 @@ RNA-FrameFlow is a generative model for 3D RNA backbone design based on SE(3) fl
   - [Citation](#citation)
   
 ## Installation
+To manage environments efficiently, we use [uv](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer). It simplifies managing dependencies and executing scripts.
+
 
 ```bash
 # clone repository
 git clone https://github.com/rish-16/rna-backbone-design.git
 cd rna-backbone-design/
 # create python environment
-conda create -n rna-bb-design python=3.10 -y
-conda activate rna-bb-design
-# install dependencies
-pip install "torch>=2.1.2"
-pip install torch_scatter torch_cluster -f https://data.pyg.org/whl/torch-2.1.2+cu121.html  # n.b., skip if these CUDA versions are not desired
-pip install -e .
+pip install uv
+uv sync
 ```
 
 > [!CAUTION]
-> Do take note of the compatibility between PyTorch and CUDA versions. We used `pytorch-cuda` v11.8 in the installation script but you should change this depending on your system's NVCC version. You can find the target version using `nvidia-smi` and looking for `CUDA Version`.
+> Do take note of the compatibility between PyTorch and CUDA versions. We used `pytorch-cuda` v12.1 in the installation script but you should change this depending on your system's NVCC version. You can find the target version using `nvidia-smi` and looking for `CUDA Version`.
 
 ## Data Preparation
 
@@ -77,7 +75,7 @@ mv all_member_pdb_4_0__3_326.zip ../ # moves ZIP archive out of new file directo
 We provide a preprocessing script `process_rna_pdb_files.py` that prepares the RNA samples used during training. Again, in the main project directory,
 ```bash
 # from ./
-python process_rna_pdb_files.py --pdb_dir data/rnasolo/ --write_dir data/rnasolo_proc/
+uv run process_rna_pdb_files.py --pdb_dir data/rnasolo/ --write_dir data/rnasolo_proc/
 ```
 
 When you visit `data/rnasolo_proc/`, you should see a bunch of subdirectories representing the root of the PDB entry names. Each subdirectory contains pickled versions of the PDB files which capture some important structural descriptors extracted from the atomic records; this is for easier bookkeeping during training. You'll also notice a `rna_metadata.csv` file. Keep track of the filepath to this CSV file – it contains metadata about the pickled RNA files and the relative filepaths to access them during training.
@@ -111,7 +109,7 @@ We use 4 RTX3090 40GB GPUs via DDP to train our model for 120K steps, which took
 
 ```bash
 # run training
-python train_se3_flows.py
+uv run train_se3_flows.py
 ```
 
 After training, the final saved checkpoint can be found at `ckpt/se3-fm/rna-frameflow/last.ckpt` directory saved locally (not part of this repo); this `ckpt` directory is created automatically by `wandb`. We also store intermediate checkpoints for your reference. You can rename and shift this `last.ckpt` file where necessary to run inference.
@@ -157,7 +155,7 @@ By default we sample 50 sequences per length between 40 and 150. Generated all-a
 
 ```bash
 # run inference
-python inference_se3_flows.py
+uv run inference_se3_flows.py
 ```
 
 Running inference also performs evaluation on the generated samples to compute local and global structural metrics. Inference together with evaluation takes around 2 hours on our hardware. See the subsequent section for setting up and running evaluation separately from inference.

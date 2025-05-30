@@ -132,10 +132,16 @@ class RNALengthBatcher:
         # Each batch contains multiple RNA of the same length.
         sample_order = []
         for seq_len, len_df in replica_csv.groupby('modeled_na_seq_len'):
-            max_batch_size = min(
-                self.max_batch_size,
-                self._sampler_cfg.max_num_res_squared // seq_len**2 + 1,
-            )
+            if self._sampler_cfg.linear_effect:
+                max_batch_size = min(
+                    self.max_batch_size,
+                    self._sampler_cfg.max_num_res_squared // seq_len + 1,
+                )
+            else:
+                max_batch_size = min(
+                    self.max_batch_size,
+                    self._sampler_cfg.max_num_res_squared // seq_len**2 + 1,
+                )
             num_batches = math.ceil(len(len_df) / max_batch_size)
             for i in range(num_batches):
                 batch_df = len_df.iloc[i*max_batch_size:(i+1)*max_batch_size]

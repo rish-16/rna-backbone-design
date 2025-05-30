@@ -13,10 +13,11 @@ from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers.wandb import WandbLogger
 from pytorch_lightning.trainer import Trainer
-from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.callbacks import ModelCheckpoint, Timer
 
 from rna_backbone_design.data.pdb_na_datamodule_base import PDBNABaseDataModule
 from rna_backbone_design.models.flow_module import FlowModule
+from rna_backbone_design.models.callback import NanGradientCallback
 import rna_backbone_design.utils as eu
 import wandb
 
@@ -49,6 +50,8 @@ class Experiment:
             
             # Model checkpoints
             callbacks.append(ModelCheckpoint(**self._exp_cfg.checkpointer))
+            callbacks.append(Timer(duration=self._exp_cfg.trainer.max_time))
+            callbacks.append(NanGradientCallback())
             
             # Save config
             cfg_path = os.path.join(ckpt_dir, 'config.yaml')
