@@ -8,11 +8,12 @@ data_cfg:
   num_eval_lengths: 10
   batch_size: 28
   max_batch_size: 28
-  max_squared_res: 375_000
-  max_num_res_squared: 375_000
+  max_squared_res: 19000
+  max_num_res_squared: 19000
   eval_batch_size: 5
   num_workers: 4
   prefetch_factor: 100
+  linear_effect: True
 
 interpolant:
   min_t: 1e-2
@@ -28,7 +29,8 @@ interpolant:
   self_condition: ${model.edge_features.self_condition}
 
 model:
-  use_flashipa: False
+  use_flashipa: True
+  mode: "flash_1d_bias" # 5 options: "orig_no_bias", "orig_2d_bias", "flash_no_bias", "flash_1d_bias", "flash_2d_factorize_bias"
   node_embed_size: 256
   edge_embed_size: 128
   symmetric: False
@@ -40,6 +42,9 @@ model:
     max_num_res: 2000
     timestep_int: 1000
   edge_features:
+    mode: ${model.mode}
+    max_len: ${data_cfg.filtering.max_len}
+    z_factor_rank: 2
     single_bias_transition_n: 2
     c_s: ${model.node_embed_size}
     c_p: ${model.edge_embed_size}
@@ -49,11 +54,16 @@ model:
     feat_dim: 64
     num_bins: 22
     self_condition: True
+    k: 20
   ipa:
+    use_flash_attn: True
+    attn_dtype: bf16 # bf16, fp16, fp32. bf16 and fp16 for flash attn, fp32 for non-flash attn
+    use_packed: True
     c_s: ${model.node_embed_size}
     c_z: ${model.edge_embed_size}
     c_hidden: 128
     no_heads: 8
+    z_factor_rank: ${model.edge_features.z_factor_rank}
     no_qk_points: 8
     no_v_points: 12
     seq_tfmr_num_heads: 4
@@ -63,7 +73,7 @@ model:
 experiment:
   debug: False
   seed: 123
-  num_devices: 4
+  num_devices: 1
   warm_start: null
   warm_start_cfg_override: True
   use_swa: False
@@ -94,15 +104,14 @@ experiment:
     lr: 0.0001
   trainer:
     overfit_batches: 0
-    # max_steps: 120000
-    # min_steps: 1
+    max_time: "00:20:00:00"
     min_epochs: 1
     max_epochs: 200
     accelerator: gpu
-    log_every_n_steps: 1
+    log_every_n_steps: 10
     deterministic: False
-    strategy: ddp
-    check_val_every_n_epoch: 20
+    strategy: ddp_find_unused_parameters_true
+    check_val_every_n_epoch: 1
     accumulate_grad_batches: 1
   checkpointer:
     dirpath: ckpt/${experiment.wandb.project}/${experiment.wandb.name}/
