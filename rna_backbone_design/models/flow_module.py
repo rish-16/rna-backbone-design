@@ -228,7 +228,7 @@ class FlowModule(LightningModule):
                 final_pos,
                 os.path.join(self._sample_write_dir, f'sample_{i}_idx_{batch_idx}_len_{num_res}.pdb'),
                 is_na_residue_mask=is_na_residue_mask.detach().cpu().numpy()[i],
-                no_indexing=True
+                # no_indexing=True
             )
             if isinstance(self.logger, WandbLogger):
                 self.validation_epoch_samples.append(

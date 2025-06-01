@@ -312,7 +312,7 @@ def calc_rna_c4_c4_metrics(c4_pos, bond_tol=0.1, clash_tol=1.0):
     clashes = inter_dists < clash_tol
 
     c4_pos = torch.from_numpy(c4_pos).unsqueeze(0)
-    rad_gyr = gyration_radius(x=c4_pos, masses=12.011 * torch.ones_like(c4_pos[..., 0], dtype=torch.float32)).numpy()
+    rad_gyr = gyration_radius(x=c4_pos, masses=12.011 * torch.ones_like(c4_pos[..., 0], dtype=torch.float32)).numpy()[0]
 
     return {
         'avg_c4_bond_dists': avg_c4_bond_dist,

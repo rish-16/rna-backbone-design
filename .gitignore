@@ -178,3 +178,6 @@ TO_SHIFT_OUT_REPRO/**
 
 /all_rebuttal/**
 rna_backbone_design/tools/rhofold_api/checkpoints/**
+
+# uv
+uv.lock
