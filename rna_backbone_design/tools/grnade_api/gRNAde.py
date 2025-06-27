@@ -15,11 +15,10 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
-# from src.trainer import self_consistency_score
-from src.data.featurizer import RNAGraphFeaturizer
-from src.models import AutoregressiveMultiGNNv1
-from src.data.data_utils import get_backbone_coords
-from src.constants import (
+from rna_backbone_design.tools.grnade_api.src.data.featurizer import RNAGraphFeaturizer
+from rna_backbone_design.tools.grnade_api.src.models import AutoregressiveMultiGNNv1
+from rna_backbone_design.tools.grnade_api.src.data.data_utils import get_backbone_coords
+from rna_backbone_design.tools.grnade_api.src.constants import (
     NUM_TO_LETTER, 
     RNA_ATOMS, 
     FILL_VALUE,
