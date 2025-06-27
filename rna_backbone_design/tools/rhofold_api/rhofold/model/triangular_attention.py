@@ -16,9 +16,9 @@ from typing import Optional, List
 import torch
 import torch.nn as nn
 
-from rhofold.model.primitives import Linear, LayerNorm, Attention
-from rhofold.utils.chunk_utils import chunk_layer
-from rhofold.utils.tensor_utils import (
+from rna_backbone_design.tools.rhofold_api.rhofold.model.primitives import Linear, LayerNorm, Attention
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.chunk_utils import chunk_layer
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import (
     permute_final_dims,
 )
 

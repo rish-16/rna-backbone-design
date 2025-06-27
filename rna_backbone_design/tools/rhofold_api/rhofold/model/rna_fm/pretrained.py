@@ -1,4 +1,4 @@
-import rhofold.model.rna_fm as rna_esm
+import rna_backbone_design.tools.rhofold_api.rhofold.model.rna_fm as rna_esm
 from argparse import Namespace
 
 rna_fm_args = {

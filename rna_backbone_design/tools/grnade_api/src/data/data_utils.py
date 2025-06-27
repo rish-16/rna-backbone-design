@@ -5,21 +5,18 @@ from typing import Any, List, Literal, Optional
 import torch
 import cpdb
 
-# from src.data.sec_struct_utils import pdb_to_sec_struct
-
 import biotite
 from biotite.structure.io import load_structure
 from biotite.structure import sasa as get_sasa
 from biotite.structure import apply_residue_wise
 
-from src.constants import (
+from rna_backbone_design.tools.grnade_api.src.constants import (
     RNA_ATOMS, 
     RNA_NUCLEOTIDES, 
     PURINES,
     PYRIMIDINES,
     FILL_VALUE
 )
-
 
 def pdb_to_tensor(
         filepath: str, 

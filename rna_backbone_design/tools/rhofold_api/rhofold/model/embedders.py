@@ -15,12 +15,12 @@ import torch.nn as nn
 from typing import Tuple
 from argparse import Namespace
 
-from rhofold.model.primitives import Linear, LayerNorm
-from rhofold.utils.tensor_utils import add
-import rhofold.model.rna_fm as rna_esm
-from rhofold.model.msa import MSANet
-from rhofold.model.pair import PairNet
-from rhofold.utils.alphabet import RNAAlphabet
+from rna_backbone_design.tools.rhofold_api.rhofold.model.primitives import Linear, LayerNorm
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import add
+import rna_backbone_design.tools.rhofold_api.rhofold.model.rna_fm as rna_esm
+from rna_backbone_design.tools.rhofold_api.rhofold.model.msa import MSANet
+from rna_backbone_design.tools.rhofold_api.rhofold.model.pair import PairNet
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.alphabet import RNAAlphabet
 
 def exists(val):
     return val is not None

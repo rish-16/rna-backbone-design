@@ -1,19 +1,19 @@
 # Configuration for inference on SE(3) diffusion experiments.
 defaults:
-  - config
+  - config_flashipa
   - _self_
 
 inference:
   run_inference: True
   seed: 123
   ckpt_path: camera_ready_ckpts/rna_frameflow_public_weights.ckpt # path to best-performing model checkpoint of interest
-  output_dir: rebuttals_rna_bb_samples # directory to store generated RNA backbone samples
+  output_dir: generated_rna_bb_samples # directory to store generated RNA backbone samples
   name: flattened_samples # sub-directory under the above directory to store the samples
 
   # Auto-evaluation
   evalsuite:
-    run_eval: True # toggle T/F whether you want to run auto-evaluation on the freshly generated batch of backbone samples
-    eval_save_dir: "evalsuite_metrics_rebuttals_rmsd"
+    run_eval: False # toggle T/F whether you want to run auto-evaluation on the freshly generated batch of backbone samples
+    eval_save_dir: "evalsuite_metrics_rmsd"
     paths:
       rnasolo_path: "data/rnasolo/"
       rnasolo_metadata_path: "metadata/rna_metadata.csv"

@@ -61,6 +61,7 @@ dependencies = [
     "editables>=0.5",
     "setuptools>=78.1.0",
     "flash_ipa>=0.1.0",
+    "flash-attn>=2.8.0.post2",
 ]
 
 [project.urls]

@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 import torch_geometric
 
-from src.layers import *
+from rna_backbone_design.tools.grnade_api.src.layers import *
 
 
 class AutoregressiveMultiGNNv1(torch.nn.Module):

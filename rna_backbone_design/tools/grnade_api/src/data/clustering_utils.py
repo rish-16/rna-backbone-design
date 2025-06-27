@@ -6,7 +6,7 @@ import pandas as pd
 from typing import Any, List, Literal, Optional
 from Bio import SeqIO
 
-from src.constants import DATA_PATH
+from rna_backbone_design.tools.grnade_api.src.constants import DATA_PATH
 
 
 def cluster_sequence_identity(

@@ -16,8 +16,8 @@ from typing import Optional
 import torch
 import torch.nn as nn
 
-from rhofold.model.primitives import Linear, LayerNorm
-from rhofold.utils.tensor_utils import permute_final_dims
+from rna_backbone_design.tools.rhofold_api.rhofold.model.primitives import Linear, LayerNorm
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import permute_final_dims
 
 
 class TriangleMultiplicativeUpdate(nn.Module):

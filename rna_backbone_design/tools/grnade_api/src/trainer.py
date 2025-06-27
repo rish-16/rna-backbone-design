@@ -12,13 +12,13 @@ import torch.nn.functional as F
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-from src.data.data_utils import get_c4p_coords
-from src.data.sec_struct_utils import (
+from rna_backbone_design.tools.grnade_api.src.data.data_utils import get_c4p_coords
+from rna_backbone_design.tools.grnade_api.src.data.sec_struct_utils import (
     predict_sec_struct,
     dotbracket_to_paired,
     dotbracket_to_adjacency
 )
-from src.constants import NUM_TO_LETTER
+from rna_backbone_design.tools.grnade_api.src.constants import NUM_TO_LETTER
 
 
 def train(

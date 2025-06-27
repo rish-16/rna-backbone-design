@@ -13,7 +13,7 @@ import biotite
 from biotite.structure.io import load_structure
 from biotite.structure import dot_bracket_from_structure
 
-from src.constants import (
+from rna_backbone_design.tools.grnade_api.src.constants import (
     PROJECT_PATH,
     X3DNA_PATH, 
     ETERNAFOLD_PATH, 

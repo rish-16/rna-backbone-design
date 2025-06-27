@@ -7,8 +7,8 @@ import torch_geometric
 from torch_geometric.utils import coalesce, to_undirected
 import torch_cluster
 
-from src.data.data_utils import get_k_random_entries_and_masks, pdb_to_tensor, get_backbone_coords
-from src.constants import RNA_NUCLEOTIDES, RNA_ATOMS, DISTANCE_EPS
+from rna_backbone_design.tools.grnade_api.src.data.data_utils import get_k_random_entries_and_masks, pdb_to_tensor, get_backbone_coords
+from rna_backbone_design.tools.grnade_api.src.constants import RNA_NUCLEOTIDES, RNA_ATOMS, DISTANCE_EPS
 
 class RNAGraphFeaturizer(object):
     """RNA Graph Featurizer

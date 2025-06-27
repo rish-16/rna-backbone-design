@@ -16,8 +16,8 @@ from typing import Optional
 import torch
 import torch.nn as nn
 
-from rhofold.model.primitives import Linear
-from rhofold.utils.chunk_utils import chunk_layer
+from rna_backbone_design.tools.rhofold_api.rhofold.model.primitives import Linear
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.chunk_utils import chunk_layer
 
 
 class OuterProductMean(nn.Module):

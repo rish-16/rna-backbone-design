@@ -6,10 +6,10 @@ from tqdm import tqdm
 import torch
 import torch.utils.data as data
 
-from src.data.data_utils import *
-from src.data.featurizer import *
+from rna_backbone_design.tools.grnade_api.src.data.data_utils import *
+from rna_backbone_design.tools.grnade_api.src.data.featurizer import *
 
-from src.constants import RNA_NUCLEOTIDES, RNA_ATOMS, DISTANCE_EPS
+from rna_backbone_design.tools.grnade_api.src.constants import RNA_NUCLEOTIDES, RNA_ATOMS, DISTANCE_EPS
 
 
 class RNADesignDataset(data.Dataset):

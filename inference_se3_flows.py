@@ -29,7 +29,7 @@ class Sampler:
         """
         ckpt_path = cfg.inference.ckpt_path
         ckpt_dir = os.path.dirname(ckpt_path)
-        ckpt_cfg = OmegaConf.load(os.path.join(ckpt_dir, 'config.yaml'))
+        ckpt_cfg = OmegaConf.load(os.path.join(ckpt_dir, 'config_flashipa.yaml'))
 
         # Set-up config.
         OmegaConf.set_struct(cfg, False)
@@ -50,13 +50,13 @@ class Sampler:
         )
         os.makedirs(self._output_dir, exist_ok=True)
         log.info(f'Saving results to {self._output_dir}')
-        config_path = os.path.join(self._output_dir, 'config.yaml')
+        config_path = os.path.join(self._output_dir, 'config_flashipa.yaml')
         with open(config_path, 'w') as f:
             OmegaConf.save(config=self._cfg, f=f)
         log.info(f'Saving inference config to {config_path}')
 
         # Read checkpoint and initialize module.
-        self._flow_module = FlowModule.load_from_checkpoint(checkpoint_path=ckpt_path)
+        self._flow_module = FlowModule.load_from_checkpoint(checkpoint_path=ckpt_path, cfg=cfg)
         
         self._flow_module.eval()
         self._flow_module._infer_cfg = self._infer_cfg

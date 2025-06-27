@@ -7,11 +7,11 @@ import numpy as np
 import torch
 
 # from rhofold.data.balstn import BLASTN
-from rhofold.rf import RhoFold
-from rhofold.config import rhofold_config
-from rhofold.utils import get_device, save_ss2ct, timing
+from rna_backbone_design.tools.rhofold_api.rhofold.rf import RhoFold
+from rna_backbone_design.tools.rhofold_api.rhofold.config import rhofold_config
+from rna_backbone_design.tools.rhofold_api.rhofold.utils import get_device, save_ss2ct, timing
 # from rhofold.relax.relax import AmberRelaxation
-from rhofold.utils.alphabet import get_features
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.alphabet import get_features
 
 @torch.no_grad()
 def main(config):

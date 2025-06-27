@@ -11,7 +11,7 @@ import shutil
 import torch
 from pathlib import Path
 import Bio.SeqIO as SeqIO
-from rhofold.model.rna_fm.constants import proteinseq_toks, rnaseq_toks
+from rna_backbone_design.tools.rhofold_api.rhofold.model.rna_fm.constants import proteinseq_toks, rnaseq_toks
 
 RawMSA = Sequence[Tuple[str, str]]
 

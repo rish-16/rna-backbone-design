@@ -14,15 +14,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 from typing import Optional, List, Tuple
 
-from rhofold.model.primitives import (
+from rna_backbone_design.tools.rhofold_api.rhofold.model.primitives import (
     Linear, 
     LayerNorm,
     Attention, 
     GlobalAttention, 
     _attention_chunked_trainable,
 )
-from rhofold.utils.chunk_utils import chunk_layer
-from rhofold.utils.tensor_utils import (
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.chunk_utils import chunk_layer
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import (
     permute_final_dims,
 )
 

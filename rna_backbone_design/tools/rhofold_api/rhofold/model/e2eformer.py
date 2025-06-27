@@ -15,22 +15,22 @@ import torch.nn as nn
 from typing import Tuple, Sequence, Optional
 from functools import partial
 
-from rhofold.model.primitives import Linear, LayerNorm
-from rhofold.model.msa import (
+from rna_backbone_design.tools.rhofold_api.rhofold.model.primitives import Linear, LayerNorm
+from rna_backbone_design.tools.rhofold_api.rhofold.model.msa import (
     MSARowAttentionWithPairBias,
     MSAColumnAttention,
 )
-from rhofold.model.outer_product_mean import OuterProductMean
-from rhofold.model.pair import PairTransition
-from rhofold.model.triangular_attention import (
+from rna_backbone_design.tools.rhofold_api.rhofold.model.outer_product_mean import OuterProductMean
+from rna_backbone_design.tools.rhofold_api.rhofold.model.pair import PairTransition
+from rna_backbone_design.tools.rhofold_api.rhofold.model.triangular_attention import (
     TriangleAttention,
 )
-from rhofold.model.triangular_update import (
+from rna_backbone_design.tools.rhofold_api.rhofold.model.triangular_update import (
     TriangleMultiplicationOutgoing,
     TriangleMultiplicationIncoming,
 )
-from rhofold.utils.chunk_utils import chunk_layer, ChunkSizeTuner
-from rhofold.utils.tensor_utils import add
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.chunk_utils import chunk_layer, ChunkSizeTuner
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import add
 
 class MSATransition(nn.Module):
     """

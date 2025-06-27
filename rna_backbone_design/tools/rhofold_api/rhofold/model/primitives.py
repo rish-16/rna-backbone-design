@@ -16,7 +16,7 @@ from typing import Optional, List, Tuple
 import torch
 import torch.nn as nn
 
-from rhofold.utils.tensor_utils import (permute_final_dims, flatten_final_dims)
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import (permute_final_dims, flatten_final_dims)
 
 def _prod(nums):
     out = 1

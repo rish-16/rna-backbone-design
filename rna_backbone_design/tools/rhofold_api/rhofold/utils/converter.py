@@ -15,8 +15,8 @@ import torch
 import numpy as np
 import logging
 from collections import defaultdict
-from rhofold.utils.constants import RNA_CONSTANTS
-from rhofold.utils.rigid_utils import Rigid, calc_rot_tsl, calc_angl_rot_tsl, merge_rot_tsl
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.constants import RNA_CONSTANTS
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.rigid_utils import Rigid, calc_rot_tsl, calc_angl_rot_tsl, merge_rot_tsl
 
 class RNAConverter():
     """RNA Structure Converter."""

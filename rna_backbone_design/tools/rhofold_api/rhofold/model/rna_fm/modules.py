@@ -10,8 +10,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from rhofold.model.rna_fm.multihead_attention import MultiheadAttention  # noqa
-from rhofold.model.rna_fm.axial_attention import ColumnSelfAttention, RowSelfAttention
+from rna_backbone_design.tools.rhofold_api.rhofold.model.rna_fm.multihead_attention import MultiheadAttention  # noqa
+from rna_backbone_design.tools.rhofold_api.rhofold.model.rna_fm.axial_attention import ColumnSelfAttention, RowSelfAttention
 
 def gelu(x):
     """Implementation of the gelu activation function.

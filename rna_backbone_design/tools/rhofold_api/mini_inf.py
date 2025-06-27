@@ -1,9 +1,9 @@
 import numpy as np
 import torch, os
 
-from rhofold.rf import RhoFold
-from rhofold.config import rhofold_config # NOTE: can remove this
-from rhofold.utils.alphabet import get_features
+from rna_backbone_design.tools.rhofold_api.rhofold.rf import RhoFold
+from rna_backbone_design.tools.rhofold_api.rhofold.config import rhofold_config # NOTE: can remove this
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.alphabet import get_features
 
 CKPT = "./rna_backbone_design/tools/rhofold_api/checkpoints/RhoFold_pretrained.pt"
 

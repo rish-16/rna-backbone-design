@@ -13,11 +13,11 @@
 import torch
 import torch.nn as nn
 
-from rhofold.model.embedders import MSAEmbedder, RecyclingEmbedder
-from rhofold.model.e2eformer import E2EformerStack
-from rhofold.model.structure_module import StructureModule
-from rhofold.model.heads import DistHead, SSHead, pLDDTHead
-from rhofold.utils.tensor_utils import add
+from rna_backbone_design.tools.rhofold_api.rhofold.model.embedders import MSAEmbedder, RecyclingEmbedder
+from rna_backbone_design.tools.rhofold_api.rhofold.model.e2eformer import E2EformerStack
+from rna_backbone_design.tools.rhofold_api.rhofold.model.structure_module import StructureModule
+from rna_backbone_design.tools.rhofold_api.rhofold.model.heads import DistHead, SSHead, pLDDTHead
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import add
 
 def exists(val):
     return val is not None

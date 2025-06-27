@@ -17,7 +17,7 @@ from typing import Tuple, Callable, Any, Dict, Sequence, Optional
 
 import torch
 
-from rhofold.utils.tensor_utils import (tree_map, tensor_tree_map)
+from rna_backbone_design.tools.rhofold_api.rhofold.utils.tensor_utils import (tree_map, tensor_tree_map)
 
 
 def _fetch_dims(tree):
