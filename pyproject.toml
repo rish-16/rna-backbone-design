@@ -20,7 +20,7 @@ classifiers=[
     "Intended Audience :: Developers",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 
 dependencies = [
@@ -99,8 +99,8 @@ markers = [
 minversion = "6.0"
 testpaths = "tests/"
 
-# Assuming you're developing for Python 3.10
-target-version = "py310"
+# Assuming you're developing for Python 3.11
+target-version = "py311"
 
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -124,7 +124,7 @@ no-build-package = ["torchvision", "torchaudio", "torch-geometric", "torch-scatt
 
 [tool.uv.sources]
 torch = { index = "pytorch" }
-flash_ipa = { git = "https://git@github.com/flagshippioneering/flash_ipa", branch = "edge_embedder" }
+flash_ipa = { git = "https://git@github.com/flagshippioneering/flash_ipa" }
 
 [[tool.uv.index]]
 name = "pytorch"
