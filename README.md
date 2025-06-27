@@ -58,7 +58,7 @@ Download RNASolo (3.48GB) containing the ~14K structures used to train our model
 ```bash
 # Download structures in PDB format from RNAsolo (31 October 2023 cutoff)
 mkdir -p data/rnasolo; cd data/rnasolo
-gdown https://drive.google.com/uc?id=10NidhkkJ-rkbqDwBGA_GaXs9enEBJ7iQ
+gdown 10NidhkkJ-rkbqDwBGA_GaXs9enEBJ7iQ
 tar -zxvf RNAsolo_31102023.tar.gz
 ```
 
