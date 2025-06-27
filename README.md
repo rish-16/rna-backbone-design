@@ -42,7 +42,10 @@ git clone https://github.com/rish-16/rna-backbone-design.git
 cd rna-backbone-design/
 # create python environment
 pip install uv
+uv venv
+uv pip install hatchling
 uv sync
+uv add flash-attn --no-build-isolation
 ```
 
 > [!CAUTION]
