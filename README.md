@@ -7,6 +7,7 @@ RNA-FrameFlow is a generative model for 3D RNA backbone design based on SE(3) fl
 ![RNA-FrameFlow](assets/rna_flow_diag.png)
 
 > Accompanying paper: ['RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design'](https://arxiv.org/abs/2406.13839), by Rishabh Anand*, Chaitanya K. Joshi*, Alex Morehead, Arian Rokkum Jamasb, Charles Harris, Simon V Mathis, Kieran Didi, Bryan Hooi, Pietro Liò.
+> - **Published** in Transactions on Machine Learning Research (TMLR), 2025: [`openreview`](https://openreview.net/forum?id=wOc1Yx5s09)
 > - **Oral** at Machine Learning for Computational Biology (MLCB), 2024 (UW, Seattle, Washington)
 > - **Oral** at ICML 2024 Structured Probabilistic Inference & Generative Modeling Workshop: [`openreview`](https://openreview.net/forum?id=Z74lflCKmF)
 > - **Spotlight** at ICML 2024 AI4Science Workshop: [`openreview`](https://openreview.net/forum?id=YzjHCdZM2h)
@@ -226,10 +227,12 @@ Our codebase builds on the open-source contributions from the following projects
 ## Citation
 
 ```
-@article{anand2024rnaframeflow,
-  title={RNA-FrameFlow: Flow Matching for de novo 3D RNA Backbone Design},
-  author={Anand, Rishabh and Joshi, Chaitanya K. and Morehead, Alex and Jamasb, Arian R. and Harris, Charles and Mathis, Simon and Didi, Kieran and Hooi, Bryan and Li{\`o}, Pietro},
-  journal={arXiv preprint arXiv:2406.13839},
-  year={2024},
+@article{anand2025rnaframeflow,
+  title={{RNA}-FrameFlow: Flow Matching for de novo 3D {RNA} Backbone Design},
+  author={Rishabh Anand and Chaitanya K. Joshi and Alex Morehead and Arian Rokkum Jamasb and Charles Harris and Simon V Mathis and Kieran Didi and Rex Ying and Bryan Hooi and Pietro Lio},
+  journal={Transactions on Machine Learning Research},
+  issn={2835-8856},
+  year={2025},
+  url={https://openreview.net/forum?id=wOc1Yx5s09},
 }
 ```
